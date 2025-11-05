@@ -1,7 +1,7 @@
-local GhApi = require("gh-actions-lsp.api.github")
+local GithubAPI = require("gh-actions-lsp.api.github")
 
 local M = {}
 
-M.api = GhApi
+M.api = GithubAPI
 
 return M
