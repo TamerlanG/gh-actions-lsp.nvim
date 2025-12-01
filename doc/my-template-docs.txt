@@ -1,62 +1,122 @@
-*my-template-docs.txt*     For Neovim >= 0.8.0    Last change: 2025 October 08
+*my-template-docs.txt*    For Neovim >= 0.8.0    Last change: 2025 December 01
 
 ==============================================================================
 Table of Contents                         *my-template-docs-table-of-contents*
 
-1. A Neovim Plugin Template        |my-template-docs-a-neovim-plugin-template|
-  - Using it              |my-template-docs-a-neovim-plugin-template-using-it|
-  - Features and structure|my-template-docs-a-neovim-plugin-template-features-and-structure|
+1. gh-actions-lsp.nvim                  |my-template-docs-gh-actions-lsp.nvim|
+  - Prerequisites         |my-template-docs-gh-actions-lsp.nvim-prerequisites|
+  - Installation           |my-template-docs-gh-actions-lsp.nvim-installation|
+  - Usage                         |my-template-docs-gh-actions-lsp.nvim-usage|
+  - Configuration         |my-template-docs-gh-actions-lsp.nvim-configuration|
 2. Links                                              |my-template-docs-links|
 
 ==============================================================================
-1. A Neovim Plugin Template        *my-template-docs-a-neovim-plugin-template*
+1. gh-actions-lsp.nvim                  *my-template-docs-gh-actions-lsp.nvim*
 
 
 
-A template repository for Neovim plugins.
+A Neovim plugin that integrates with the GitHub Actions Language Server to
+provide LSP features for GitHub workflow files.
 
 
-USING IT                  *my-template-docs-a-neovim-plugin-template-using-it*
+PREREQUISITES             *my-template-docs-gh-actions-lsp.nvim-prerequisites*
 
-Via `gh`:
 
->
-    $ gh repo create my-plugin -p ellisonleao/nvim-plugin-template
+1. GITHUB ACTIONS LANGUAGE SERVER ~
+
+This plugin requires the `gh-actions-language-server` binary to be installed.
+You can install it via npm:
+
+>bash
+    npm install -g @github/gh-actions-language-server
 <
 
-Via github web page:
 
-Click on `Use this template`
+2. GITHUB TOKEN ~
+
+You must set a GitHub token as an environment variable for the language server
+to function properly. The token is required to access GitHub’s API for
+workflow validation and completion.
+
+Set the `GHCRIO` environment variable with your GitHub token:
+
+>bash
+    export GHCRIO=your_github_token_here
+<
+
+To make this permanent, add it to your shell configuration file (`.bashrc`,
+`.zshrc`, etc.):
+
+>bash
+    echo 'export GHCRIO=your_github_token_here' >> ~/.bashrc
+    # or for zsh:
+    echo 'export GHCRIO=your_github_token_here' >> ~/.zshrc
+<
+
+**Note:** You can generate a GitHub token at GitHub Settings > Developer
+settings > Personal access tokens <https://github.com/settings/tokens>. The
+token needs appropriate permissions to access repository information.
 
 
+INSTALLATION               *my-template-docs-gh-actions-lsp.nvim-installation*
 
 
-FEATURES AND STRUCTURE*my-template-docs-a-neovim-plugin-template-features-and-structure*
+LAZY.NVIM ~
 
-- 100% Lua
-- Github actions for:
-    - running tests using plenary.nvim <https://github.com/nvim-lua/plenary.nvim> and busted <https://olivinelabs.com/busted/>
-    - check for formatting errors (Stylua)
-    - vimdocs autogeneration from README.md file
-    - luarocks release (LUAROCKS_API_KEY secret configuration required)
+Add the following to your Lazy.nvim configuration:
+
+>lua
+    {
+      "tamerlang/gh-actions-lsp.nvim",
+      opts = {}
+    }
+<
+
+Or with custom configuration:
+
+>lua
+    {
+      "tamerlang/gh-actions-lsp.nvim",
+      opts = {
+        -- Add any custom options here
+      },
+      ft = { "yaml" }, -- Only load for YAML files
+      event = "VeryLazy" -- Or load on specific events
+    }
+<
 
 
-PLUGIN STRUCTURE ~
+MANUAL INSTALLATION ~
 
->
-    .
-    ├── lua
-    │   ├── plugin_name
-    │   │   └── module.lua
-    │   └── plugin_name.lua
-    ├── Makefile
-    ├── plugin
-    │   └── plugin_name.lua
-    ├── README.md
-    ├── tests
-    │   ├── minimal_init.lua
-    │   └── plugin_name
-    │       └── plugin_name_spec.lua
+If you prefer manual installation, clone this repository to your Neovim
+configuration directory:
+
+>bash
+    git clone https://github.com/tamerlang/gh-actions-lsp.nvim ~/.config/nvim/pack/plugins/start/gh-actions-lsp.nvim
+<
+
+Then add the plugin to your configuration:
+
+>lua
+    require("gh-actions-lsp").setup({})
+<
+
+
+USAGE                             *my-template-docs-gh-actions-lsp.nvim-usage*
+
+The plugin automatically detects GitHub workflow files
+(`.github/workflows/*.yml` and `.github/workflows/*.yaml`) and attaches the
+Language Server when you open them.
+
+
+CONFIGURATION             *my-template-docs-gh-actions-lsp.nvim-configuration*
+
+The plugin uses sensible defaults, but you can customize its behavior:
+
+>lua
+    require("gh-actions-lsp").setup({
+      -- Configuration options will be documented here as they're added
+    })
 <
 
 ==============================================================================
@@ -64,7 +124,6 @@ PLUGIN STRUCTURE ~
 
 1. *GitHub Workflow Status*: https://img.shields.io/github/actions/workflow/status/ellisonleao/nvim-plugin-template/lint-test.yml?branch=main&style=for-the-badge
 2. *Lua*: https://img.shields.io/badge/Made%20with%20Lua-blueviolet.svg?style=for-the-badge&logo=lua
-3. **: https://docs.github.com/assets/cb-36544/images/help/repository/use-this-template-button.png
 
 Generated by panvimdoc <https://github.com/kdheepak/panvimdoc>
 
