@@ -1,4 +1,4 @@
-*my-template-docs.txt*    For Neovim >= 0.8.0    Last change: 2025 December 01
+*my-template-docs.txt*    For Neovim >= 0.8.0    Last change: 2025 December 06
 
 ==============================================================================
 Table of Contents                         *my-template-docs-table-of-contents*
@@ -6,8 +6,6 @@ Table of Contents                         *my-template-docs-table-of-contents*
 1. gh-actions-lsp.nvim                  |my-template-docs-gh-actions-lsp.nvim|
   - Prerequisites         |my-template-docs-gh-actions-lsp.nvim-prerequisites|
   - Installation           |my-template-docs-gh-actions-lsp.nvim-installation|
-  - Usage                         |my-template-docs-gh-actions-lsp.nvim-usage|
-  - Configuration         |my-template-docs-gh-actions-lsp.nvim-configuration|
 2. Links                                              |my-template-docs-links|
 
 ==============================================================================
@@ -78,45 +76,10 @@ Or with custom configuration:
     {
       "tamerlang/gh-actions-lsp.nvim",
       opts = {
-        -- Add any custom options here
+          fallback_org = "random-org", -- Optional: specify a fallback organization if organization cannot be determined in repo
       },
-      ft = { "yaml" }, -- Only load for YAML files
-      event = "VeryLazy" -- Or load on specific events
+      event = "VeryLazy" 
     }
-<
-
-
-MANUAL INSTALLATION ~
-
-If you prefer manual installation, clone this repository to your Neovim
-configuration directory:
-
->bash
-    git clone https://github.com/tamerlang/gh-actions-lsp.nvim ~/.config/nvim/pack/plugins/start/gh-actions-lsp.nvim
-<
-
-Then add the plugin to your configuration:
-
->lua
-    require("gh-actions-lsp").setup({})
-<
-
-
-USAGE                             *my-template-docs-gh-actions-lsp.nvim-usage*
-
-The plugin automatically detects GitHub workflow files
-(`.github/workflows/*.yml` and `.github/workflows/*.yaml`) and attaches the
-Language Server when you open them.
-
-
-CONFIGURATION             *my-template-docs-gh-actions-lsp.nvim-configuration*
-
-The plugin uses sensible defaults, but you can customize its behavior:
-
->lua
-    require("gh-actions-lsp").setup({
-      -- Configuration options will be documented here as they're added
-    })
 <
 
 ==============================================================================
